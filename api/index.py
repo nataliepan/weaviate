@@ -16,38 +16,17 @@ def create_app():
     app = Flask(__name__, instance_relative_config=False)
     CORS(app)
 
-    mail = Mail(app)
-
-    # This is the configuration for the email server.
-    app.config["MAIL_SERVER"] = "smtp.gmail.com"
-    app.config["MAIL_PORT"] = 465
-    app.config["MAIL_USERNAME"] = os.environ.get("EMAIL_HOST_USER")
-    app.config["MAIL_PASSWORD"] = os.environ.get("EMAIL_HOST_PASSWORD")
-    app.config["MAIL_USE_TLS"] = False
-    app.config["MAIL_USE_SSL"] = True
+ 
 
     @app.route("/api/json")
     def hello_json():
         return jsonify({"message": f"Hello, World! {OPENAI_API_KEY}."})
 
-    app.config.from_object("config.Config")
+    # app.config.from_object("config.Config")
 
-    api = Api(app=app)
+    # api = Api(app=app)
 
-    from users.routes import create_authentication_routes
-    create_authentication_routes(api=api)
-
-    from entries.routes import create_entries_routes
-    create_entries_routes(api=api)
-
-    db.init_app(app)
-
-    with app.app_context():
-
-        db.create_all()  # Create database tables for our data models
-
-        return app
-
+    return app
 
 if __name__ == "__main__":
     app = create_app()
