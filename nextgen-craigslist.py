@@ -8,6 +8,21 @@ import base64
 # Connect to Weaviate
 weaviate_client = weaviate.Client(url="http://localhost:8080")
 
+def set_bg(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/{"webp"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+
 # Helper function to convert a file to base64 representation
 def toBase64(path):
     with open(path, 'rb') as file:
@@ -40,6 +55,11 @@ def image_search(image_path):
     return final_results
 
 def main():
+    st.title("Nextgen Craigslist Powered by GAI")
+
+    # Set background image
+    set_bg('bg.webp')
+
     # Image Upload
     st.subheader("Upload an Image:")
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
