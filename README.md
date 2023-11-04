@@ -2,7 +2,7 @@
 Is an Gen AI classifieds that lets you search via text or search via image to find what you want
 weaviate
 
-Developed at ODSC Hackathon
+Developed @ ODSC Hackathon
 
 
 
